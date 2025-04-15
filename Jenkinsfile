@@ -55,10 +55,11 @@ pipeline {
           changedApps += sh(script: "git diff --name-only HEAD~1 HEAD | grep gpt && echo 'python'", returnStatus: true) == 0 ? ['python'] : []
           changedApps += sh(script: "git diff --name-only HEAD~1 HEAD | grep anguler && echo 'angular'", returnStatus: true) == 0 ? ['angular'] : []
 
-          def deploymentMarkerPath = "/opt/tomcat/node" // You could replace this with an actual file or status check
-          def alreadyDeployed = sh(script: "test -f ${deploymentMarkerPath} && echo 'yes'", returnStatus: true) == 0
+          // def deploymentMarkerPath = "/opt/tomcat/node" // You could replace this with an actual file or status check
+          // def alreadyDeployed = sh(script: "test -f ${deploymentMarkerPath} && echo 'yes'", returnStatus: true) == 0
           
-          if (changedApps.isEmpty() && alreadyDeployed) {
+          // if (changedApps.isEmpty() && alreadyDeploye) {
+          if (changedApps.isEmpty()) {
             currentBuild.result = 'ABORTED'
             error "No relevant changes to build or deploy."
           } else {
